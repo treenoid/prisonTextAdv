@@ -127,11 +127,11 @@ public class TextController : MonoBehaviour
 	void lock_0()
 	{
 		text.text = "You run your hands through the bars. Feeling around " +
-			"notice push buttons on the locking mechanism. " +
-				"You could randomly guess at the code, but there must " +
-				"be a better way. \n\n " +
-				"Press R to view Return to roaming in your cell, " +
-				"Press L to enter a 3 digit keycode.";
+					"notice push buttons on the locking mechanism. " +
+					"You could randomly guess at the code, but there must " +
+					"be a better way. \n\n " +
+					"Press R to view Return to roaming in your cell, " +
+					"Press L to enter a 3 digit keycode.";
 		
 		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.cell_0;} // Remove this curly brace when toggling next line comment
 //															securityPanelContainer.SetActive(false);}
