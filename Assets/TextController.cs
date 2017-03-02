@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+
 public class TextController : MonoBehaviour 
 {
-//	Not to self: Renamed Text to Texts on Unity Heirarchy.
+//	Not to self: Renamed Text to Texts on Unity Heirarchy (to know the difference
+//  between securityPanel and Canvas when chosing OnEnd(string) in Unity) Does not
+//	seem to affect gameplay or code at all[tested].
+
 	public Text text;
 	
-	//IF START ISNT AN ENUM STATE, YOU CANNOT RUN IT ON THE FUCKING SCREEN
+	//***remember!!!***IF START ISNT AN ENUM STATE,  IT  WILL NOT RUN IN THE F*****G GAME ***remember!!!***
 	private enum States {start, cell_0, sheets_0, sheets_1 , lock_0, mirror_1a, got_it_all, lock_1a, 
 						freedom, mirror_0, cell_mirror_bleeding, lock_0a, lock_0b, lock_1, 
 						death_0, death_1a, sheets_2 , sheets_2a , death_1, death_0a, freedom_0,	
@@ -22,16 +26,9 @@ public class TextController : MonoBehaviour
 	public InputField securityPanel;
 	private string secureCode_0;
 //	private string secureCode_1;
+//	private string secureCode_2;
 	
-	private void Initialise()
-	{
-		secureCode_0 = "440";	// enter code of your choice
-//		secureCode_1 = "100";   // leads to cell_c3c
-//		secureCode_2 = "135";   // enter code of your choice	
-		securityPanelCover.SetActive(false);	// cover is now set it inactive and is hidden 
-		securityPanel = securityPanelCover.GetComponentInChildren<InputField>();	// grabs the InputField
-		securityPanel.onEndEdit.AddListener(delegate { CheckSecurityCode(); }); // reference that points to the method {CheckSecurityCode();}
-	}
+	
 	// Use this for initialization
 	void Start () 
 	{
@@ -42,18 +39,46 @@ public class TextController : MonoBehaviour
 	
 	public void CheckSecurityCode()
 	{
+		securityPanelCover.SetActive(false);		
 		string attemptedCode = securityPanel.text;
 		
-		if 		(attemptedCode == secureCode_0)				{myState = States.freedom_0;}
-		else 												{myState = States.death_0;}
-	}	
+		if 		(attemptedCode == secureCode_0) 		{myState = States.freedom_0;}
+		else 											{myState = States.death_0;}
+	}
+	
+	private void Initialise()
+	{
+	// Da Codes!
+		secureCode_0 = "440";	// enter code of your choice
+		//		secureCode_1 = "100";   // leads to cell_c3c
+		//		secureCode_2 = "135";   // enter code of your choice
+		
+	//Cover and Input	
+		securityPanelCover.SetActive(false);	// cover is now set it inactive and is hidden 
+		securityPanel = securityPanelCover.GetComponentInChildren<InputField>();	// grabs the InputField
+		securityPanel.onEndEdit.AddListener(delegate { CheckSecurityCode(); });
+
+
+
+
+
+
+
+///Summary
+///Game functions until code goes in. the delegate seems to be causing issues with not being instantiated
+///Summary
+
+
+
+	}
 			
 			
 			// Update is called once per frame
 	void Update () 
 	{
 		if 		(!hasStartedGame && Input.GetKeyUp(KeyCode.X))		{hasStartedGame = true;myState = States.cell_0;
-				print (myState);}
+		
+		print (myState);} // States
 		
 		else if (myState == States.cell_0)					{cell_0();} 
 		else if (myState == States.sheets_0)				{sheets_0();}
@@ -157,8 +182,11 @@ public class TextController : MonoBehaviour
 					"Press R to view Return to roaming in your cell, " +
 					"Press L to enter a 3 digit keycode.";
 		
-		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.cell_0;} // Remove this curly brace when toggling next line comment
-//															securityPanelContainer.SetActive(false);}
+		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.cell_0; // } // Remove this curly brace when toggling next line comment
+															securityPanelCover.SetActive(false);}
+		
+		else if	(Input.GetKeyDown(KeyCode.L))				{securityPanelCover.SetActive(true);
+															securityPanel.Select();}
 	}
 	
 	
@@ -192,7 +220,8 @@ public class TextController : MonoBehaviour
 				"Press L to enter a 3 digit keycode. ";
 		
 		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.cell_0;} // Remove this curly brace when toggling next line comment
-//															securityPanelContainer.SetActive(false);}
+//															securityPanelCover.SetActive(false);}
+		
 	}
 	
 	void mirror_0()
@@ -442,7 +471,7 @@ public class TextController : MonoBehaviour
 				"T to enter a 3 digit combination.";
 		
 		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.corridor_0;} // Remove this curly brace when toggling next line comment
-//															securityPanelContainer.SetActive(false);}
+//															securityPanelCover.SetActive(false);}
 	}
 
 	void cell_A1()
@@ -492,7 +521,7 @@ public class TextController : MonoBehaviour
 					"T to enter a 3 digit combination.";
 		
 		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.corridor_1;} // Remove this curly brace when toggling next line comment
-//																securityPanelContainer.SetActive(false);}
+//																securityPanelCover.SetActive(false);}
 
 	}
 	
@@ -533,7 +562,7 @@ public class TextController : MonoBehaviour
 				"T to enter a 3 digit combination.";
 		
 		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.corridor_1;} // Remove this curly brace when toggling next line comment
-//															securityPanelContainer.SetActive(false);}
+//															securityPanelCover.SetActive(false);}
 	}
 	
 	void cell_C3a()
