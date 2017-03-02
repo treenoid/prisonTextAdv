@@ -37,41 +37,26 @@ public class TextController : MonoBehaviour
 		Initialise();
 	}
 	
+	private void Initialise()
+	{
+		secureCode_0 = "100";
+		//		secureCode_1 = "100";
+		//		secureCode_2 = "135";
+		securityPanel = securityPanelCover.GetComponentInChildren<InputField>();	// grabs the InputField
+		securityPanel.onEndEdit.AddListener(delegate { CheckSecurityCode(); }); // reference that points to the method {CheckSecurityCode();}
+		securityPanelCover.SetActive(false);	// cover is now set it inactive and is hidden 
+	}
+			
 	public void CheckSecurityCode()
 	{
 		securityPanelCover.SetActive(false);		
 		string attemptedCode = securityPanel.text;
 		
 		if 		(attemptedCode == secureCode_0) 		{myState = States.freedom_0;}
-		else 											{myState = States.death_0;}
+		else 											{myState = States.death_0;
+														securityPanelCover.SetActive(false);}
 	}
-	
-	private void Initialise()
-	{
-	// Da Codes!
-		secureCode_0 = "440";	// enter code of your choice
-		//		secureCode_1 = "100";   // leads to cell_c3c
-		//		secureCode_2 = "135";   // enter code of your choice
-		
-	//Cover and Input	
-		securityPanelCover.SetActive(false);	// cover is now set it inactive and is hidden 
-		securityPanel = securityPanelCover.GetComponentInChildren<InputField>();	// grabs the InputField
-		securityPanel.onEndEdit.AddListener(delegate { CheckSecurityCode(); });
 
-
-
-
-
-
-
-///Summary
-///Game functions until code goes in. the delegate seems to be causing issues with not being instantiated
-///Summary
-
-
-
-	}
-			
 			
 			// Update is called once per frame
 	void Update () 
