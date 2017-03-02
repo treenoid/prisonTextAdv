@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 public class TextController : MonoBehaviour 
 {
-	
+//	Not to self: Renamed Text to Texts on Unity Heirarchy.
 	public Text text;
 	
 	//IF START ISNT AN ENUM STATE, YOU CANNOT RUN IT ON THE FUCKING SCREEN
@@ -18,16 +18,40 @@ public class TextController : MonoBehaviour
 						
 	private States myState;
 	private bool hasStartedGame = false;
+	public GameObject securityPanelCover;
+	public InputField securityPanel;
+	private string secureCode_0;
+//	private string secureCode_1;
 	
+	private void Initialise()
+	{
+		secureCode_0 = "440";	// enter code of your choice
+//		secureCode_1 = "100";   // leads to cell_c3c
+//		secureCode_2 = "135";   // enter code of your choice	
+		securityPanelCover.SetActive(false);	// cover is now set it inactive and is hidden 
+		securityPanel = securityPanelCover.GetComponentInChildren<InputField>();	// grabs the InputField
+		securityPanel.onEndEdit.AddListener(delegate { CheckSecurityCode(); }); // reference that points to the method {CheckSecurityCode();}
+	}
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
 		text.text = "A game about getting out. \n\n" +
-			"Press X to begin.";
-	
+					"Press X to begin.";
+		Initialise();
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	public void CheckSecurityCode()
+	{
+		string attemptedCode = securityPanel.text;
+		
+		if 		(attemptedCode == secureCode_0)				{myState = States.freedom_0;}
+		else 												{myState = States.death_0;}
+	}	
+			
+			
+			// Update is called once per frame
+	void Update () 
+	{
 		if 		(!hasStartedGame && Input.GetKeyUp(KeyCode.X))		{hasStartedGame = true;myState = States.cell_0;
 				print (myState);}
 		
@@ -497,7 +521,7 @@ public class TextController : MonoBehaviour
 	}
 	
 	
-	void cell_C2() //User attemptsCode
+	void cell_C2() // User attemptsCode
 	{
 		text.text = "[LOCKED]\n\n" +
 			"Finally, the last cell." +
@@ -531,7 +555,6 @@ public class TextController : MonoBehaviour
 		else if	(Input.GetKeyDown (KeyCode.L))				{myState = States.lock_C3;}				
 	}
 	
-	// Remember to try to include BLACKOUTS	
 	void cell_C3b()
 	{
 		text.text = "You hear an ear piercing *BEEP*, as well " +
@@ -634,9 +657,7 @@ public class TextController : MonoBehaviour
 				"Press R to continue inspecting cell C, " +
 				"T to try a combination.";
 		
-		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.cell_C3a;}
-		else if	(Input.GetKeyDown (KeyCode.T))				{myState = States.stairs_0;}//change stairs_0 to attemptCode_C3
-		//		else if	(Input.GetKeyDown (KeyCode.T))				{myState = States.attemptCode_C3;} //correct code leads to {stairs_0}
+		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.cell_C3a;}	
 	}				
 	
 	void stairs_0()
@@ -731,7 +752,7 @@ public class TextController : MonoBehaviour
 				"Press X to continue.";
 		
 		if 		(Input.GetKeyDown (KeyCode.X))				{myState = States.cell_0;}
-		else if (Input.GetKeyDown (KeyCode.Z))			{myState = States.cell_C1;} //cheat to go back a step.
+		else if (Input.GetKeyDown (KeyCode.Z))				{myState = States.cell_C1;} //cheat to go back a step.
 	}
 	
 	void death_C2()
