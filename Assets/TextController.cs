@@ -4,22 +4,22 @@ using System.Collections;
 
 public class TextController : MonoBehaviour 
 {
-//	Not to self: Renamed Text to Texts on Unity Heirarchy (to know the difference
-//  between securityPanel and Canvas when chosing OnEnd(string) in Unity) Does not
-//	seem to affect gameplay or code at all[tested].
-
+	//	Not to self: Renamed Text to Texts on Unity Heirarchy (to know the difference
+	//  between securityPanel and Canvas when chosing OnEnd(string) in Unity) Does not
+	//	seem to affect gameplay or code at all[tested].
+	
 	public Text text;
 	
 	//***remember!!!***IF START ISNT AN ENUM STATE,  IT  WILL NOT RUN IN THE F*****G GAME ***remember!!!***
 	private enum States {start, cell_0, sheets_0, sheets_1 , lock_0, mirror_1a, got_it_all, lock_1a, 
-						freedom, mirror_0, cell_mirror_bleeding, lock_0a, lock_0b, lock_1, 
-						death_0, death_1a, sheets_2 , sheets_2a , death_1, death_0a, freedom_0,	
-						ending, corridor_0, corridor_1, corridor_2, cell_A0, cell_B0, cell_C0,
-						cell_A1, cell_A1gold, cell_B1, cell_C1, cell_A2, cell_B2, cell_C2, cell_C3a, 
-						cell_C3b, bed_B0, skeleton_B0, mirror_B0, mirror_A1, mirror_C3, bed_A1, bed_C3,
-						lock_C3, stairs_0, stairs_1, freedom_1, envelope_0, death_C0, death_C1,
-						death_C2, death_C3, death_B0};
-						
+		freedom, mirror_0, cell_mirror_bleeding, lock_0a, lock_0b, lock_1, 
+		death_0, death_1a, sheets_2 , sheets_2a , death_1, death_0a, freedom_0,	
+		ending, corridor_0, corridor_1, corridor_2, cell_A0, cell_B0, cell_C0,
+		cell_A1, cell_A1gold, cell_B1, cell_C1, cell_A2, cell_B2, cell_C2, cell_C3a, 
+		cell_C3b, bed_B0, skeleton_B0, mirror_B0, mirror_A1, mirror_C3, bed_A1, bed_C3,
+		lock_C3, stairs_0, stairs_1, freedom_1, envelope_0, death_C0, death_C1,
+		death_C2, death_C3, death_B0};
+	
 	private States myState;
 	private bool hasStartedGame = false;
 	public GameObject securityPanelCover;
@@ -33,20 +33,20 @@ public class TextController : MonoBehaviour
 	void Start () 
 	{
 		text.text = "A game about getting out. \n\n" +
-					"Press X to begin.";
+			"Press X to begin.";
 		Initialise();
 	}
 	
 	private void Initialise()
 	{
 		secureCode_0 = "100";
-		//		secureCode_1 = "100";
-		//		secureCode_2 = "135";
+//		secureCode_1 = "100";
+//		secureCode_2 = "135";
 		securityPanel = securityPanelCover.GetComponentInChildren<InputField>();	// grabs the InputField
-		securityPanel.onEndEdit.AddListener(delegate { CheckSecurityCode(); }); // reference that points to the method {CheckSecurityCode();}
-		securityPanelCover.SetActive(false);	// cover is now set it inactive and is hidden 
+		securityPanel.onEndEdit.AddListener(delegate { CheckSecurityCode(); }); 	// reference that points to the method {CheckSecurityCode();}
+		securityPanelCover.SetActive(false);										// cover is now set it inactive and is hidden 
 	}
-			
+	
 	public void CheckSecurityCode()
 	{
 		securityPanelCover.SetActive(false);		
@@ -56,14 +56,14 @@ public class TextController : MonoBehaviour
 		else 											{myState = States.death_0;
 														securityPanelCover.SetActive(false);}
 	}
-
-			
-			// Update is called once per frame
+	
+	
+	// Update is called once per frame
 	void Update () 
 	{
 		if 		(!hasStartedGame && Input.GetKeyUp(KeyCode.X))		{hasStartedGame = true;myState = States.cell_0;
-		
-		print (myState);} // States
+			
+			print (myState);} // States
 		
 		else if (myState == States.cell_0)					{cell_0();} 
 		else if (myState == States.sheets_0)				{sheets_0();}
@@ -122,10 +122,10 @@ public class TextController : MonoBehaviour
 	void cell_0()
 	{
 		text.text = "Disoriented, you wake up in a cell with not a sound to be heard. " +
-					"Your surroundings dictate that escape is essential for your survival. " +
-					"There is a bed behind you made with filthy sheets, " +
-					"a mirrior on the wall, and a locked door.\n\n" +
-					"Press S to view Sheets, M to view Mirror, L to view Lock.";	
+			"Your surroundings dictate that escape is essential for your survival. " +
+				"There is a bed behind you made with filthy sheets, " +
+				"a mirrior on the wall, and a locked door.\n\n" +
+				"Press S to view Sheets, M to view Mirror, L to view Lock.";	
 		
 		
 		
@@ -137,62 +137,62 @@ public class TextController : MonoBehaviour
 	void sheets_0()
 	{
 		text.text = "Blood, urine, is that, chocolate?. " +
-					"Hopefully not yours.\n\n " +
-					"Press R to view Return to roaming your cell, L to " +
-					"look at Lock, T to tear and Take a clean section of sheeting.";
-			
+			"Hopefully not yours.\n\n " +
+				"Press R to view Return to roaming your cell, L to " +
+				"look at Lock, T to tear and Take a clean section of sheeting.";
+		
 		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.cell_0;}
 		else if (Input.GetKeyDown (KeyCode.T))				{myState = States.sheets_1;}
 		else if (Input.GetKeyDown (KeyCode.L))				{myState = States.lock_0a;}
-		}
+	}
 	
 	void sheets_1 ()
 	{
 		text.text = "Tearing across the grain, you fashion yourself a nice "+
-					"little roll of some-what clean-ish fabric.\n\n " +
-					"Press R to return searching the sheets, " +
-					"M to look at Mirror.";
+			"little roll of some-what clean-ish fabric.\n\n " +
+				"Press R to return searching the sheets, " +
+				"M to look at Mirror.";
 		
 		if 	 (Input.GetKeyDown (KeyCode.R))					{myState = States.sheets_0;}
 		else if (Input.GetKeyDown (KeyCode.M))				{myState = States.mirror_1a;}
-			
-		}
 		
+	}
+	
 	void lock_0()
 	{
 		text.text = "You run your hands through the bars. Feeling around " +
-					"notice push buttons on the locking mechanism. " +
-					"You could randomly guess at the code, but there must " +
-					"be a better way. \n\n " +
-					"Press R to view Return to roaming in your cell, " +
-					"Press L to enter a 3 digit keycode.";
+			"notice push buttons on the locking mechanism. " +
+				"You could randomly guess at the code, but there must " +
+				"be a better way. \n\n " +
+				"Press R to view Return to roaming in your cell, " +
+				"Press L to enter a 3 digit keycode.";
 		
-		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.cell_0; // } // Remove this curly brace when toggling next line comment
-															securityPanelCover.SetActive(false);}
+		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.cell_0;
+			securityPanelCover.SetActive(false);}
 		
 		else if	(Input.GetKeyDown(KeyCode.L))				{securityPanelCover.SetActive(true);
-															securityPanel.Select();}
+			securityPanel.Select();}
 	}
 	
 	
 	void mirror_1a()
 	{
 		text.text = "A cracked mirror, garnished with smears of dried blood. " +
-					"'What prison allowes broken glass in a cell?' you think, " +
-					"before realizing you aren't meant to leave, alive.\n\n " +
-					"Press R to return searching the sheets, " +
-					"B to use Bandage roll and take mirror safetly.";
-				
+			"'What prison allowes broken glass in a cell?' you think, " +
+				"before realizing you aren't meant to leave, alive.\n\n " +
+				"Press R to return searching the sheets, " +
+				"B to use Bandage roll and take mirror safetly.";
+		
 		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.sheets_1;}
 		else if (Input.GetKeyDown (KeyCode.B))				{myState = States.got_it_all;}
 	}
 	void got_it_all()
 	{
 		text.text = "Feeling better about your perdipredicament you realize you " +
-					"have what it takes to be the star in one of those 'Escape from...' " +
-					"movies. Staring at the door ahead the answer comes to you-\n\n " +
-					"Press M to use mirror with bars. " +
-					"X to Retrace your steps from the beginning." ;
+			"have what it takes to be the star in one of those 'Escape from...' " +
+				"movies. Staring at the door ahead the answer comes to you-\n\n " +
+				"Press M to use mirror with bars. " +
+				"X to Retrace your steps from the beginning." ;
 		
 		if 		(Input.GetKeyDown (KeyCode.M))				{myState = States.lock_1a;}
 		else if	(Input.GetKeyDown (KeyCode.X))				{myState = States.cell_0;}
@@ -205,7 +205,7 @@ public class TextController : MonoBehaviour
 				"Press L to enter a 3 digit keycode. ";
 		
 		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.cell_0;} // Remove this curly brace when toggling next line comment
-//															securityPanelCover.SetActive(false);}
+		//															securityPanelCover.SetActive(false);}
 		
 	}
 	
@@ -223,10 +223,10 @@ public class TextController : MonoBehaviour
 	void cell_mirror_bleeding()
 	{
 		text.text = "Upon removing a nice sized slice of mirror from the wall, the wall  " +
-					"removed a nice sized slice of flesh from your finger with the, now, " +
-					"broken mirror. \n\n" +
-					"Press R to Return to roaming your cell, "+
-					"L to look at Lock, S to inspect the Sheets";
+			"removed a nice sized slice of flesh from your finger with the, now, " +
+				"broken mirror. \n\n" +
+				"Press R to Return to roaming your cell, "+
+				"L to look at Lock, S to inspect the Sheets";
 		
 		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.death_0;}
 		else if (Input.GetKeyDown (KeyCode.L))				{myState = States.lock_0b;}
@@ -241,17 +241,22 @@ public class TextController : MonoBehaviour
 				"be a better way. \n\n " +
 				"Press R to rifle through the Sheets again. ";
 		
-		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.sheets_0;}
+		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.sheets_0;
+															securityPanelCover.SetActive(false);}
+		
+		else if	(Input.GetKeyDown(KeyCode.L))				{securityPanelCover.SetActive(true);
+			securityPanel.Select();}
 	}
-	
+
+
 	void lock_0b()
 	{
 		text.text = "You run your hands through the bars. Feeling around " +
-					"notice push buttons on the locking mechanism. " +
-					"You could randomly guess at the code, but there must " +
-					"be a better way. \n\n " +
-					"Press R to Return to roaming your cell, " +
-					"M to use Mirror with bars.";
+			"notice push buttons on the locking mechanism. " +
+				"You could randomly guess at the code, but there must " +
+				"be a better way. \n\n " +
+				"Press R to Return to roaming your cell, " +
+				"M to use Mirror with bars.";
 		
 		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.death_1;}
 		else if (Input.GetKeyDown (KeyCode.M))				{myState = States.lock_1;}
@@ -291,7 +296,7 @@ public class TextController : MonoBehaviour
 		if 		(Input.GetKeyDown (KeyCode.X))				{myState = States.cell_0;}
 	}
 	
-		
+	
 	void sheets_2 ()
 	{
 		text.text = "Adding more color to the sheets with every grab  "+
@@ -455,16 +460,19 @@ public class TextController : MonoBehaviour
 				"Press R to Return to corridor" + 
 				"T to enter a 3 digit combination.";
 		
-		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.corridor_0;} // Remove this curly brace when toggling next line comment
-//															securityPanelCover.SetActive(false);}
+		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.corridor_0;
+															securityPanelCover.SetActive(false);}
+	
+		else if	(Input.GetKeyDown(KeyCode.L))				{securityPanelCover.SetActive(true);
+															securityPanel.Select();}
 	}
-
+	
 	void cell_A1()
 	{
 		text.text = "This cell’s occupant appears to be hiding under the covers! " +
-					"You can barely get a good view of the mirror, you think it " +
-					"might be cracked or marred as well.\n\n" +
-					"Press R to return to corridor, G to use the Gold key in lock";
+			"You can barely get a good view of the mirror, you think it " +
+				"might be cracked or marred as well.\n\n" +
+				"Press R to return to corridor, G to use the Gold key in lock";
 		
 		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.corridor_0;}
 		else if	(Input.GetKeyDown (KeyCode.G))				{myState = States.cell_A1gold;}
@@ -474,13 +482,13 @@ public class TextController : MonoBehaviour
 	void cell_A1gold()
 	{
 		text.text = "You enter the cell and there is a crunching under your " +
-					"feet. You stop to look down and notice a very broken mirror. " +
-					"Ahead, a bed, with what looks like a person (or rather, " +
-					"skeleton) covered in sheets. Stepping back you notice that" +
-					"a majority of the cell is marked in dried blood. You don’t feel " +
-					"sick, but the hairs on the back of your neck start to tingle.\n\n" +
-					"Press R to return to the corridor, M to check the mirror, and " +
-					"B to search the bed.";
+			"feet. You stop to look down and notice a very broken mirror. " +
+				"Ahead, a bed, with what looks like a person (or rather, " +
+				"skeleton) covered in sheets. Stepping back you notice that" +
+				"a majority of the cell is marked in dried blood. You don’t feel " +
+				"sick, but the hairs on the back of your neck start to tingle.\n\n" +
+				"Press R to return to the corridor, M to check the mirror, and " +
+				"B to search the bed.";
 		
 		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.corridor_1;}
 		else if	(Input.GetKeyDown (KeyCode.M))				{myState = States.mirror_A1;}
@@ -490,8 +498,8 @@ public class TextController : MonoBehaviour
 	void cell_B1()
 	{
 		text.text = "Shiver your timbers! You certainly do NOT want to go back in there " +
-					"You have what you need and hopefully have learned an important lesson.\n\n" +
-					"Press R to return to corridor.";
+			"You have what you need and hopefully have learned an important lesson.\n\n" +
+				"Press R to return to corridor.";
 		
 		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.corridor_1;}
 	}
@@ -499,15 +507,17 @@ public class TextController : MonoBehaviour
 	void cell_C1() // User attemptsCode
 	{
 		text.text = "[LOCKED]\n\n" +
-					"Still in very poor condition, the skeleton, as well as " +
-					"everything, is covered in dust, ash or some kind. " +
-					"know for sure.\n\n" +
-					"Press R to Return to corridor" + 
-					"T to enter a 3 digit combination.";
+			"Still in very poor condition, the skeleton, as well as " +
+				"everything, is covered in dust, ash or some kind. " +
+				"know for sure.\n\n" +
+				"Press R to Return to corridor" + 
+				"T to enter a 3 digit combination.";
 		
-		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.corridor_1;} // Remove this curly brace when toggling next line comment
-//																securityPanelCover.SetActive(false);}
-
+		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.corridor_1;
+															securityPanelCover.SetActive(false);}
+	
+		else if	(Input.GetKeyDown(KeyCode.L))				{securityPanelCover.SetActive(true);
+															securityPanel.Select();}
 	}
 	
 	void cell_A2()
@@ -546,8 +556,11 @@ public class TextController : MonoBehaviour
 				"Press R to Return to corridor" + 
 				"T to enter a 3 digit combination.";
 		
-		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.corridor_1;} // Remove this curly brace when toggling next line comment
-//															securityPanelCover.SetActive(false);}
+		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.corridor_1;
+															securityPanelCover.SetActive(false);}
+	
+		else if	(Input.GetKeyDown(KeyCode.L))				{securityPanelCover.SetActive(true);
+															securityPanel.Select();}
 	}
 	
 	void cell_C3a()
@@ -671,7 +684,11 @@ public class TextController : MonoBehaviour
 				"Press R to continue inspecting cell C, " +
 				"T to try a combination.";
 		
-		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.cell_C3a;}	
+		if 		(Input.GetKeyDown (KeyCode.R))				{myState = States.cell_C3a;
+															securityPanelCover.SetActive(false);}
+	
+		else if	(Input.GetKeyDown(KeyCode.L))				{securityPanelCover.SetActive(true);
+															securityPanel.Select();}
 	}				
 	
 	void stairs_0()
@@ -810,7 +827,7 @@ public class TextController : MonoBehaviour
 	
 	
 	
-	
-	
-	
+
+
+
 }
